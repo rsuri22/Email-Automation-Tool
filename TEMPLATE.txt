@@ -1,0 +1,5 @@
+Dear {Salutation},
+
+My name is Rohan Suri, and I'm currently a chemistry student at Yale with a strong interest in AI tools for research productivity. I came across your work at {Institution} and was particularly interested in talking to you about your research process.
+
+I’m currently developing tools to streamline lab workflows using automation and AI, and I’d love to learn more about the specific pain points you encounter in your work. Would you be open to a short conversation sometime next week?
