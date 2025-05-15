@@ -54,7 +54,7 @@ def generate_emails(df, template):
 			Institution=row["Institution"],
 			Custom_Note=row["Custom Note"],
 			Salutation=row["Salutation"]
-			) + "\n\n" + SIGNATURE
+			) + "\n" + SIGNATURE
 		emails.append({
 			"to": row["Email"],
 			"body": email_body
@@ -86,15 +86,32 @@ def log_email_sent(email_dict):
 			 datetime.now().isoformat()
 			 ])
 
+def load_sent_emails(log_path="sent_log.csv"):
+	sent = set()
+	try:
+		with open(log_path, "r") as f:
+			reader = csv.reader(f)
+			for row in reader:
+				sent.add(row[0])  # assumes first column is email
+	except FileNotFoundError:
+		pass  # no log yet
+	return sent
+
 df = load_sheet(SHEET_NAME, CREDENTIALS_FILE)
 df = clean_data(df)
 
 template = load_template()
 emails_list = generate_emails(df, template)
+sent_emails = load_sent_emails()
+
 
 with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
 	smtp.login(GMAIL_ADDRESS, APP_PASSWORD)
 	for email in emails_list:
+		if email["to"] in sent_emails:
+			print(f"Skipping {email['to']} (already sent)")
+			continue
+
 		msg = build_email_message(email)
 		print(f"Sending to {msg['To']}...")
 		smtp.send_message(msg)
