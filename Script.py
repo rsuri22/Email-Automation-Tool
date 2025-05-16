@@ -7,11 +7,11 @@ from datetime import datetime
 import csv
 from email.message import EmailMessage
 
-GMAIL_ADDRESS = "rohansuri.prime@gmail.com"   # Your Gmail
+GMAIL_ADDRESS = "rohansuri.prime@gmail.com"
 APP_PASSWORD = "mgzy buig ycsm cmib"     # App password from Gmail
 REPLY_TO = "rohan.suri@yale.edu"             # Where replies should go
 SHEET_NAME = "Chem Contact Info"
-CREDENTIALS_FILE = "email-automation-459819-c5fd66abf44b.json"
+CREDENTIALS_FILE = "email-automation-459819-dbd8fe248f3b.json"
 SIGNATURE = """
 Best regards,  
 Rohan Suri  
@@ -82,7 +82,7 @@ def log_email_sent(email_dict):
 		writer = csv.writer(logfile)
 		writer.writerow([
 			 email_dict["to"],
-			 email_dict.get("salutation", ""),  # Optional
+			 email_dict.get("salutation", ""),  # doesn't work
 			 datetime.now().isoformat()
 			 ])
 
